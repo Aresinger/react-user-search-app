@@ -1,16 +1,54 @@
-# React + Vite
+# React User Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React app that searches users with a responsive UX and safe async handling.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Coming soon (Vercel/Netlify deploy in progress).
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Debounced search input (300ms) to reduce unnecessary requests.
+- Request cancellation with `AbortController` to prevent race conditions.
+- Runtime cache with `useRef` to avoid repeated fetches for the same query.
+- UI states for loading, error, and empty results.
+- Clean component split (`Form` + `Result`) with lifted search state.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- Tailwind CSS
+- Fetch API
+
+## How It Works
+
+1. The user types in the search input.
+2. The query is normalized (`trim().toLowerCase()`) and debounced.
+3. If the query is cached, results are returned immediately.
+4. Otherwise, a fetch request is started and can be aborted on new input/unmount.
+5. The UI renders the correct state: loading, error, empty, or results.
+
+## Run Locally
+
+```bash
+npm install
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+## What I'd Improve Next
+
+- Add tests for async states and cache behavior (React Testing Library + Vitest).
+- Improve accessibility with stronger ARIA feedback for loading/error states.
+- Add request retry strategy and better user-facing error messages.
+
+## Author
+
+- GitHub: [@Aresinger](https://github.com/Aresinger)
+- LinkedIn: add your profile link here
